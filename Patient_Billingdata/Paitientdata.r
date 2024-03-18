@@ -9,45 +9,29 @@ rm(list = ls())
 
 setwd('~/Data-332/Assignment/Patient_Billingdata')
 
-billing_data <- read_xlsx('Billing.xlsx')
-patient_data <- read_xlsx('Patient.xlsx')
-Visit_data <- read.csv('Visit.txt')
+# Load the data
+df_billing <- read_excel("Billing.xlsx")
+df_Patient <- read_excel("Patient.xlsx")
+df_Visit <- read_excel("Visit.xlsx")
 
-names(Visit_data)[names(Visit_data) == "X13272"] <- "Visit-ID"
+# Convert dates
+df_Visit$VisitDate <- as.Date(df_Visit$VisitDate)
 
-merged_data <- left_join(billing_data, patient_data,by = c("VisitID" = "PatientID"))
-merged_data$VisitID <- as.numeric(merged_data$VisitID)
+# Merge visit data with patient data
+merged_data <- left_join(df_Visit, df_Patient, by = "PatientID")
 
-merged_data_2<-left_join(Visit_data, merged_data, by = c("Visit-ID"="VisitID"))
-# Rename the "Influenza" column to "Reason"
+# Filter visits before 2021
+EarlierVisits <- merged_data %>%
+  filter(VisitDate < as.Date("2021-01-01"))
 
-merged_data_2 <- merged_data_2 %>% rename(Reason = Influenza)
+# Summarize visits by city
+patients_all_city <- merged_data %>%
+  group_by(City) %>%
+  summarise(number = n())
 
-reason <- merged_data_2 %>%
-  group_by(Reason) %>%
-  summarise(Count = n())
-
-library(ggplot2)
-
-chart1 <- ggplot(reason, aes(x = Reason, y = Count, fill=Reason)) +
-  geom_col() +
-  labs(title = "Reason Count Plot", x = "Reason", y = "Count") +
-  theme_minimal()+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-chart1
-library(ggplot2)
-
-reason_l <- patient_data %>%
-  group_by(Zip) %>%
-  summarise(Count = n())
-reason_l <- merged_data_2 %>%
-  group_by(Reason) %>%
-  summarise(Count = n())
-
-chart_by_location <- ggplot(reason_l, aes(x = Zip, y = Count, fill = Reason)) +
-  geom_col(position = "stack") +
-  labs(title = "Reason for Visit by Zip Code", x = "Zip Code", y = "Count") +
+# Example visualization: Number of visits per city
+ggplot(patients_all_city, aes(x = reorder(City, number), y = number, fill = City)) +
+  geom_bar(stat = "identity") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels if needed
-
-chart_by_location
+  labs(title = "Number of Visits per City", x = "City", y = "Number of Visits") +
+  coord_flip()
