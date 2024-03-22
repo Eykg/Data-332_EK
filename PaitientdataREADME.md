@@ -36,8 +36,8 @@ The stacked bar chart below illustrates the total invoice amount generated for v
 
 **Number of Visits per City**
 
-  -Understanding the distribution of patient visits across different cities provides valuable insights into healthcare utilization patterns.
-  This analysis helps healthcare providers allocate resources effectively and tailor services to meet the specific needs of different regions.
+- Understanding the distribution of patient visits across different cities provides valuable insights into healthcare     utilization patterns.
+- This analysis helps healthcare providers allocate resources effectively and tailor services to meet the specific needs of different regions.
 
 **Visualization**
 
