@@ -41,7 +41,7 @@ bfhgf
 
 **Total balance due by major, segment by payment plan**
 
-Analyzing the total balance due by students in each major, segmented by their payment plan, helps in understanding the financial obligations of students across 
+- Analyzing the total balance due by students in each major, segmented by their payment plan, helps in understanding the financial obligations of students across 
 different academic programs. This insight is essential for financial management and student support initiatives.
 
 **Visualization **
