@@ -10,3 +10,4 @@ allocation and planning.
 Visualization
 
 The chart below visualizes the number of visits per city, highlighting how patient visits are distributed across different cities in the dataset.
+![visist based on cityyy](https://github.com/Eykg/Data-332_EK/assets/159856425/3263572d-032d-4baf-81bf-e392a3261eb7)
